@@ -1,6 +1,9 @@
+import 'package:att_man/CreateClassModalSheet.dart';
+import 'package:att_man/Widgets/JoinClassBottomSheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'Widgets/MyElevatedButton.dart';
 import 'Widgets/MyOutlinedButton.dart';
 
@@ -23,6 +26,7 @@ class Home extends StatelessWidget {
                     text: 'Join a class',
                     onPressed: () {
                       //Todo:
+                      joinClassBottomSheet(context);
                     },
                   ),
                 ),
@@ -32,6 +36,9 @@ class Home extends StatelessWidget {
                 Expanded(
                   child: MyOutlinedButton(
                     text: 'Create class',
+                    onPressed: () {
+                     createClassModalSheet(context);
+                    },
                   ),
                 ),
               ],

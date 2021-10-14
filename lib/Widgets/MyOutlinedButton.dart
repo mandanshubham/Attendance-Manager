@@ -3,13 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class MyOutlinedButton extends StatelessWidget {
   final String text;
-  MyOutlinedButton({required this.text});
+  final Function onPressed;
+  MyOutlinedButton({required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: ()  {
-        //todo:
+        onPressed();
       },
       style: OutlinedButton.styleFrom(
         side: BorderSide(

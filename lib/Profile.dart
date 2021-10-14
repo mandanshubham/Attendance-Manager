@@ -112,6 +112,9 @@ class Profile extends StatelessWidget {
                   Expanded(
                     child: MyOutlinedButton(
                       text: 'Logout',
+                      onPressed: () {
+                        //Todo:
+                      },
                     ),
                   ),
                 ],

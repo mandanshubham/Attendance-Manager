@@ -9,15 +9,18 @@ class MyTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      decoration: const InputDecoration(
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color(0xff7e8ce0)),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(10),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xff7e8ce0),
+          ),
         ),
         hoverColor: Colors.black,
-        border: UnderlineInputBorder(),
+        border: OutlineInputBorder(),
       ),
       style: GoogleFonts.quicksand(
-      ),
+          fontSize: 18, fontWeight: FontWeight.w400),
     );
   }
 }

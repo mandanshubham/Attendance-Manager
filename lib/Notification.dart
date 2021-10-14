@@ -20,7 +20,9 @@ class CreateClass extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   color: Colors.grey),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Card(
               elevation: 1,
               child: Container(
@@ -59,7 +61,8 @@ class CreateClass extends StatelessWidget {
                       ),
                     ),
                     Linkify(
-                      text: 'Meeting Link : https://meet.google.com/dau-ancs-tvy?pli=1&authuser=1\nGood Morning Students',
+                      text:
+                          'Meeting Link : https://meet.google.com/dau-ancs-tvy?pli=1&authuser=1\nGood Morning Students',
                       style: GoogleFonts.quicksand(
                         fontSize: 14,
                       ),
