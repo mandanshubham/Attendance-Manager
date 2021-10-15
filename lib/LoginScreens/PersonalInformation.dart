@@ -2,8 +2,7 @@ import 'package:att_man/Dashboard.dart';
 import 'package:att_man/Widgets/MyElevatedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'Widgets/MyTextFormField.dart';
+import '../Widgets/MyTextFormField.dart';
 
 class PersonalInformation extends StatelessWidget {
   const PersonalInformation({Key? key}) : super(key: key);

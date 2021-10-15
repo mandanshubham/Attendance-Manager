@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "947397947517",
+    "project_id": "mandan-bd2ee",
+    "storage_bucket": "mandan-bd2ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947397947517:android:6274c326d71e315587c114",
+        "android_client_info": {
+          "package_name": "com.example.att_man"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947397947517-8ge1iu7c8iiumqfdecfs3tf396h73f0t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd7XX2gsRSXrlrONevsAXJRiFWOuyda6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947397947517-8ge1iu7c8iiumqfdecfs3tf396h73f0t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

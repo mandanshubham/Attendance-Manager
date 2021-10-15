@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'Widgets/MyElevatedButton.dart';
-import 'Widgets/MyTextFormField.dart';
+import 'MyElevatedButton.dart';
+import 'MyTextFormField.dart';
 
 Future<void> createClassModalSheet(BuildContext context) {
   return showModalBottomSheet(
