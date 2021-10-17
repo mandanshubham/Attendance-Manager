@@ -1,11 +1,18 @@
-import 'package:att_man/Dashboard.dart';
+import 'package:att_man/BottomNavScreens/BottomNavLayout.dart';
+import 'package:att_man/Firebase/GoogleAuthentication.dart';
 import 'package:att_man/Widgets/MyElevatedButton.dart';
+import 'package:att_man/Widgets/MyOutlinedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Widgets/MyTextFormField.dart';
+import 'package:att_man/Firebase/DatabaseHandler.dart';
 
 class PersonalInformation extends StatelessWidget {
-  const PersonalInformation({Key? key}) : super(key: key);
+
+  final TextEditingController displayNameController = TextEditingController();
+  final TextEditingController enrollmentNumberController = TextEditingController();
+  final TextEditingController instituteNameController = TextEditingController();
+  final TextEditingController contactNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +39,7 @@ class PersonalInformation extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                       color: Colors.grey),
                 ),
-                MyTextFormField(),
+                MyTextFormField(controller: displayNameController,),
                 SizedBox(
                   height: 20,
                 ),
@@ -43,7 +50,7 @@ class PersonalInformation extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                       color: Colors.grey),
                 ),
-                MyTextFormField(),
+                MyTextFormField(controller: enrollmentNumberController,),
                 SizedBox(
                   height: 20,
                 ),
@@ -54,7 +61,7 @@ class PersonalInformation extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                       color: Colors.grey),
                 ),
-                MyTextFormField(),
+                MyTextFormField(controller: instituteNameController,),
                 SizedBox(
                   height: 20,
                 ),
@@ -65,20 +72,43 @@ class PersonalInformation extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                       color: Colors.grey),
                 ),
-                MyTextFormField(),
+                MyTextFormField(controller: contactNumberController,),
                 SizedBox(
                   height: 40,
                 ),
-                Center(
-                  child: MyElevatedButton(
-                    text: 'Sign up',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Dashboard()),
-                      );
-                    },
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: MyElevatedButton(
+                        text: 'Continue',
+                        onPressed: () async {
+                          await DatabaseHandler().addUserToDatabase(
+                              displayNameController.text.toUpperCase(),
+                              instituteNameController.text,
+                              enrollmentNumberController.text.toUpperCase(),
+                              contactNumberController.text
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => BottomNavLayout()),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: MyOutlinedButton(
+                        text: 'Sign out',
+                        onPressed: () async {
+                         await GoogleAuthentication().signOutFromGoogle();
+                         Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

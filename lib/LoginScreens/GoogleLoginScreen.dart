@@ -1,11 +1,10 @@
-import 'package:att_man/Dashboard.dart';
+import 'package:att_man/BottomNavScreens/BottomNavLayout.dart';
 import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:att_man/Firebase/GoogleAuthentication.dart';
 import 'package:att_man/LoginScreens/PersonalInformation.dart';
 import 'package:att_man/Utils/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class GoogleLoginScreen extends StatelessWidget {
   @override
@@ -62,10 +61,10 @@ class GoogleLoginScreen extends StatelessWidget {
                   (user) {
                     DatabaseHandler().userHasDatabase().then(
                           (isRegistered) {
-                            if (isRegistered || user.additionalUserInfo!.isNewUser) {
+                            if (isRegistered) {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Dashboard()),
+                                MaterialPageRoute(builder: (context) => BottomNavLayout()),
                               );
                             } else {
                               Navigator.push(

@@ -1,9 +1,6 @@
-import 'package:att_man/Dashboard.dart';
-import 'package:att_man/LoginScreens/GoogleLoginScreen.dart';
-import 'package:att_man/LoginScreens/PersonalInformation.dart';
+import 'package:att_man/NextPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.grey.shade100,
       ),
-      home: GoogleLoginScreen(),
+      home: NextPage(),
     );
   }
 }

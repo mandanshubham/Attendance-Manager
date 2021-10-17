@@ -1,3 +1,5 @@
+import 'package:att_man/Firebase/GoogleAuthentication.dart';
+import 'package:att_man/LoginScreens/GoogleLoginScreen.dart';
 import 'package:att_man/Widgets/MyElevatedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,8 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Widgets/MyOutlinedButton.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,9 +112,16 @@ class Profile extends StatelessWidget {
                   Expanded(
                     child: MyOutlinedButton(
                       text: 'Logout',
-                      onPressed: () {
-                        //Todo:
-                      },
+                      onPressed: () async {
+                        await GoogleAuthentication().signOutFromGoogle();
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return GoogleLoginScreen();
+                            },
+                          ),
+                              (_) => false,
+                        );                      },
                     ),
                   ),
                 ],

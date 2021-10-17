@@ -22,7 +22,6 @@ environment:
 
 dependencies:
   google_fonts: ^2.1.0
-  persistent_bottom_nav_bar: ^4.0.2
   flutter_linkify: ^5.0.2
 
   #Firebase Dependencies

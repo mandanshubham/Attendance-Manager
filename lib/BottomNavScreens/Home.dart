@@ -1,9 +1,7 @@
 import 'package:att_man/Widgets/CreateClassModalSheet.dart';
 import 'package:att_man/Widgets/JoinClassBottomSheet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import '../Widgets/MyElevatedButton.dart';
 import '../Widgets/MyOutlinedButton.dart';
 

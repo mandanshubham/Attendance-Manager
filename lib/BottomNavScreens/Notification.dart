@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CreateClass extends StatelessWidget {
-  const CreateClass({Key? key}) : super(key: key);
+class Notifications extends StatelessWidget {
+  const Notifications({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
