@@ -35,26 +35,49 @@ class DatabaseHandler {
         'instituteName': instituteName,
         'contactNumber': contactNumber,
         'emailId': currentUser.email,
-        'photoURL': currentUser.photoURL
+        'photoURL': currentUser.photoURL,
+        'joinedClasses' : []
       });
     } else
       throw 'Current user is null';
   }
 
-  Future<Map<String, dynamic>> getAllUserData() async {
+  //This function is used in profile to fetch data from Users collection
+  Future<QuerySnapshot<Map<String, dynamic>>> getAllUserData() async {
     if (_firebaseAuth.currentUser != null) {
-      await _fireStore
+     return await _fireStore
           .collection('Users')
           .where('uid', isEqualTo: _firebaseAuth.currentUser!.uid)
-          .get()
-          .then((value) {
-            return value.docs.asMap();
-      });
+          .get();
     } else
       throw 'Current user is null';
+  }
 
-    return {};
+  //This function is used to create a class in Classes collection
+  Future<void> createClass(String title, String description) async {
+    User? currentUser = _firebaseAuth.currentUser;
+    if(currentUser != null) {
+      _fireStore.collection('Classes').add({
+        'uid' : currentUser.uid,
+        'title' : title,
+        'description' : description,
+        'classCode' : DateTime.now().millisecondsSinceEpoch.toString(),
+        });
+    }
+  }
+
+  // Future<void> joinClass(List<String> l) async {
+  //   User? currentUser = _firebaseAuth.currentUser;
+  //   if(currentUser != null) {
+  //     _fireStore.collection('Users')
+  //         .where('uid', isEqualTo: _firebaseAuth.currentUser!.uid)
+  //   }
+  // }
+
+  //Streaming data from Classes;
+  Stream<QuerySnapshot> streamCreateClasses() {
+    User? currentUser = _firebaseAuth.currentUser;
+    return _fireStore.collection('Classes').where('uid', isEqualTo: currentUser!.uid).snapshots();
   }
 }
 
-//String _displayName="", _enrollmentNumber="", _instituteName="", _contactNumber="";

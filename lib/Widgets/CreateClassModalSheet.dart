@@ -1,3 +1,4 @@
+import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'MyElevatedButton.dart';
@@ -18,7 +19,7 @@ Future<void> createClassModalSheet(BuildContext context) {
 }
 
 class CreateClassScreen extends StatelessWidget {
-  final TextEditingController subjectNameController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
   @override
@@ -33,14 +34,14 @@ class CreateClassScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Subject name',
+              'Title / Subject Name',
               style: GoogleFonts.quicksand(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Colors.grey),
             ),
             MyTextFormField(
-              controller: subjectNameController,
+              controller: titleController,
             ),
             SizedBox(
               height: 20,
@@ -63,8 +64,9 @@ class CreateClassScreen extends StatelessWidget {
               children: [
                 MyElevatedButton(
                   text: 'Create class',
-                  onPressed: () {
-                    //
+                  onPressed: () async {
+                    Navigator.pop(context);
+                    await DatabaseHandler().createClass(titleController.text, descriptionController.text);
                   },
                 ),
               ],

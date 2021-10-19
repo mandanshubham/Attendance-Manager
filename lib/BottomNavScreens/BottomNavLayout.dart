@@ -1,4 +1,4 @@
-import 'package:att_man/BottomNavScreens/Home.dart';
+import 'package:att_man/BottomNavScreens/Home/Home.dart';
 import 'package:att_man/BottomNavScreens/Notification.dart';
 import 'package:att_man/BottomNavScreens/Profile.dart';
 import 'package:att_man/Utils/Constants.dart';
@@ -16,11 +16,7 @@ class BottomNavLayout extends StatefulWidget {
 
 class _BottomNavLayoutState extends State<BottomNavLayout> {
   int _currentIndex = 0;
-  List<Widget> _bottomNavScreens = [
-    Home(),
-    Notifications(),
-    Profile(),
-  ];
+  List<Widget> _bottomNavScreens=[];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -28,6 +24,16 @@ class _BottomNavLayoutState extends State<BottomNavLayout> {
     });
   }
 
+  @override
+  void initState() {
+    _bottomNavScreens = [
+    Home(),
+    Notifications(),
+    Profile(),
+    ];
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
