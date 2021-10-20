@@ -55,6 +55,76 @@ class Home extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   color: Colors.grey),
             ),
+            StreamBuilder<QuerySnapshot>(
+              stream: DatabaseHandler().streamJoinedClasses(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  print(snapshot.toString());
+                  return Flexible(
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                      },
+                      child: ListView(
+                        padding: EdgeInsets.symmetric(horizontal: 0),
+                        shrinkWrap: true,
+                        children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                          Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                          return Card(
+                            elevation: 0.5,
+                            child: ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CreatedClassScreen(
+                                      classCode: data['classCode'].toString(),
+                                      classTitle: data['title'],
+                                      description: data['description'],
+                                    ),
+                                  ),
+                                );
+                              },
+                              contentPadding:
+                              EdgeInsets.symmetric(horizontal: 10),
+                              leading: CircleAvatar(
+                                backgroundColor: kPrimaryLight50,
+                                child: Icon(
+                                  Icons.account_tree_rounded,
+                                  color: kPrimary0,
+                                  size: 25,
+                                ),
+                              ),
+                              title: Text(
+                                data['title'],
+                                style: GoogleFonts.quicksand(
+                                    fontSize: 18, color: Colors.black),
+                              ),
+                              subtitle: Text(
+                                data['description'],
+                                style: GoogleFonts.quicksand(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  );
+                } else
+                  return Text(
+                    'You have not created any class yet',
+                    style: GoogleFonts.quicksand(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey),
+                  );
+              },
+            ),
             SizedBox(
               height: 20,
             ),
@@ -65,16 +135,13 @@ class Home extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   color: Colors.grey),
             ),
-            SizedBox(
-              height: 5,
-            ),
             StreamBuilder(
               stream: DatabaseHandler().streamCreateClasses(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
                   print(snapshot.toString());
-                  return Expanded(
+                  return Flexible(
                     child: ListView(
                       padding: EdgeInsets.symmetric(horizontal: 0),
                       children:

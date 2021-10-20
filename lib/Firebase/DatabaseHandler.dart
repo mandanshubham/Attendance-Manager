@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 class DatabaseHandler {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -8,13 +9,14 @@ class DatabaseHandler {
   //This is bool function which returns whether user uid is in database or not
   Future<bool> userHasDatabase() async {
     bool _flag = false;
-    if (_firebaseAuth.currentUser != null) {
+    User? currentUser = _firebaseAuth.currentUser;
+    if (currentUser != null) {
       await _fireStore
           .collection('Users')
-          .where('uid', isEqualTo: _firebaseAuth.currentUser!.uid)
+          .doc(currentUser.uid.toString())
           .get()
           .then((value) {
-        if (value.docs.isNotEmpty) {
+        if (value.exists) {
           _flag = true;
         }
       }).catchError((error) => throw (error));
@@ -28,7 +30,7 @@ class DatabaseHandler {
       String enrollmentNumber, String contactNumber) async {
     User? currentUser = _firebaseAuth.currentUser;
     if (currentUser != null) {
-      _fireStore.collection('Users').add({
+      _fireStore.collection('Users').doc(currentUser.uid).set({
         'uid': currentUser.uid,
         'displayName': displayName,
         'enrollmentNumber': enrollmentNumber,
@@ -36,18 +38,18 @@ class DatabaseHandler {
         'contactNumber': contactNumber,
         'emailId': currentUser.email,
         'photoURL': currentUser.photoURL,
-        'joinedClasses' : []
       });
     } else
       throw 'Current user is null';
   }
 
   //This function is used in profile to fetch data from Users collection
-  Future<QuerySnapshot<Map<String, dynamic>>> getAllUserData() async {
-    if (_firebaseAuth.currentUser != null) {
-     return await _fireStore
+  Future<DocumentSnapshot<Map<String, dynamic>>> getAllUserData() async {
+    User? currentUser = _firebaseAuth.currentUser;
+    if (currentUser != null) {
+      return await _fireStore
           .collection('Users')
-          .where('uid', isEqualTo: _firebaseAuth.currentUser!.uid)
+          .doc(currentUser.uid.toString())
           .get();
     } else
       throw 'Current user is null';
@@ -56,28 +58,58 @@ class DatabaseHandler {
   //This function is used to create a class in Classes collection
   Future<void> createClass(String title, String description) async {
     User? currentUser = _firebaseAuth.currentUser;
-    if(currentUser != null) {
+    if (currentUser != null) {
       _fireStore.collection('Classes').add({
-        'uid' : currentUser.uid,
-        'title' : title,
-        'description' : description,
-        'classCode' : DateTime.now().millisecondsSinceEpoch.toString(),
-        });
+        'uid': currentUser.uid,
+        'title': title,
+        'description': description,
+        'classCode': DateTime.now().millisecondsSinceEpoch.toString(),
+        'students': []
+      });
     }
   }
 
-  // Future<void> joinClass(List<String> l) async {
-  //   User? currentUser = _firebaseAuth.currentUser;
-  //   if(currentUser != null) {
-  //     _fireStore.collection('Users')
-  //         .where('uid', isEqualTo: _firebaseAuth.currentUser!.uid)
-  //   }
-  // }
+  Future<void> joinClass(String classCode) async {
+    User? currentUser = _firebaseAuth.currentUser;
+    if (currentUser != null) {
+      var snapshot = _fireStore
+          .collection('Classes')
+          .where('classCode', isEqualTo: classCode)
+          .get()
+          .catchError((e) {
+        throw 'Error finding the class code';
+      });
+
+      String docId;
+      await snapshot.then((value) {
+        docId = value.docs[0].id;
+        if (docId.isNotEmpty) {
+          _fireStore.collection('Classes').doc(docId).update({
+            'students': FieldValue.arrayUnion([currentUser.uid.toString()])
+          });
+        }
+      });
+    } else
+      throw 'Error in joinedClass() function';
+  }
 
   //Streaming data from Classes;
   Stream<QuerySnapshot> streamCreateClasses() {
     User? currentUser = _firebaseAuth.currentUser;
-    return _fireStore.collection('Classes').where('uid', isEqualTo: currentUser!.uid).snapshots();
+    return _fireStore
+        .collection('Classes')
+        .where('uid', isEqualTo: currentUser!.uid)
+        .snapshots();
   }
+
+  Stream<QuerySnapshot> streamJoinedClasses() {
+    User? currentUser = _firebaseAuth.currentUser;
+    return _fireStore
+        .collection('Classes')
+        .where('students', arrayContains: currentUser!.uid.toString())
+        .snapshots();
+  }
+
+
 }
 

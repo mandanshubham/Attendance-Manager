@@ -18,154 +18,152 @@ class Profile extends StatelessWidget {
         _contactNumber,
         _emailId;
     return Scaffold(
-      body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      body: FutureBuilder<DocumentSnapshot>(
           future: DatabaseHandler().getAllUserData(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              var profileData = snapshot.data!.docs[0].data();
+              var profileData = snapshot.data!.data() as Map<String, dynamic>;
               _displayName = profileData['displayName'];
               _enrollmentNumber = profileData['enrollmentNumber'];
               _instituteName = profileData['instituteName'];
               _contactNumber = profileData['contactNumber'];
               _emailId = profileData['emailId'];
 
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 60),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'PROFILE',
-                        style: GoogleFonts.quicksand(
-                          fontSize: 16,
+              return Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 60),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      'PROFILE',
+                      style: GoogleFonts.quicksand(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Display Name',
+                      style: GoogleFonts.quicksand(
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Colors.grey,
-                        ),
+                          fontStyle: FontStyle.italic),
+                    ),
+                    Text(
+                      _displayName,
+                      style: GoogleFonts.quicksand(
+                        fontSize: 20,
                       ),
-                      SizedBox(
-                        height: 20,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Email Id',
+                      style: GoogleFonts.quicksand(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    Text(
+                      _emailId,
+                      style: GoogleFonts.quicksand(
+                        fontSize: 20,
                       ),
-                      Text(
-                        'Display Name',
-                        style: GoogleFonts.quicksand(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                            fontStyle: FontStyle.italic),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Enrollment Number',
+                      style: GoogleFonts.quicksand(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    Text(
+                      _enrollmentNumber,
+                      style: GoogleFonts.quicksand(
+                        fontSize: 20,
                       ),
-                      Text(
-                        _displayName,
-                        style: GoogleFonts.quicksand(
-                          fontSize: 20,
-                        ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Institute Name',
+                      style: GoogleFonts.quicksand(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    Text(
+                      _instituteName,
+                      style: GoogleFonts.quicksand(
+                        fontSize: 20,
                       ),
-                      SizedBox(
-                        height: 20,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Contact Number',
+                      style: GoogleFonts.quicksand(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    Text(
+                      '+91 $_contactNumber',
+                      style: GoogleFonts.quicksand(
+                        fontSize: 20,
                       ),
-                      Text(
-                        'Email Id',
-                        style: GoogleFonts.quicksand(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                            fontStyle: FontStyle.italic),
-                      ),
-                      Text(
-                        _emailId,
-                        style: GoogleFonts.quicksand(
-                          fontSize: 20,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Enrollment Number',
-                        style: GoogleFonts.quicksand(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                            fontStyle: FontStyle.italic),
-                      ),
-                      Text(
-                        _enrollmentNumber,
-                        style: GoogleFonts.quicksand(
-                          fontSize: 20,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Institute Name',
-                        style: GoogleFonts.quicksand(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                            fontStyle: FontStyle.italic),
-                      ),
-                      Text(
-                        _instituteName,
-                        style: GoogleFonts.quicksand(
-                          fontSize: 20,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Contact Number',
-                        style: GoogleFonts.quicksand(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                            fontStyle: FontStyle.italic),
-                      ),
-                      Text(
-                        '+91 $_contactNumber',
-                        style: GoogleFonts.quicksand(
-                          fontSize: 20,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: MyElevatedButton(
-                              text: 'Edit profile',
-                              onPressed: () {
-                                //Todo:
-                              },
-                            ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: MyElevatedButton(
+                            text: 'Edit profile',
+                            onPressed: () {
+                              //Todo:
+                            },
                           ),
-                          SizedBox(
-                            width: 20,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: MyOutlinedButton(
+                            text: 'Logout',
+                            onPressed: () async {
+                              await GoogleAuthentication().signOutFromGoogle();
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return GoogleLoginScreen();
+                                  },
+                                ),
+                                (_) => false,
+                              );
+                            },
                           ),
-                          Expanded(
-                            child: MyOutlinedButton(
-                              text: 'Logout',
-                              onPressed: () async {
-                                await GoogleAuthentication()
-                                    .signOutFromGoogle();
-                                Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                                      return GoogleLoginScreen();
-                                    },
-                                  ),
-                                  (_) => false,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               );
             } else {

@@ -1,5 +1,7 @@
+import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:att_man/Utils/Constants.dart';
 import 'package:att_man/Widgets/MyElevatedButton.dart';
+import 'package:att_man/Widgets/MyTextFormField.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,7 +21,7 @@ void joinClassBottomSheet(BuildContext context) {
 }
 
 class JoinClass extends StatelessWidget {
-  const JoinClass({Key? key}) : super(key: key);
+  final TextEditingController joinClassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,20 +47,7 @@ class JoinClass extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 4,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(10),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0xff7e8ce0),
-                        ),
-                      ),
-                      hoverColor: Colors.black,
-                      border: OutlineInputBorder(),
-                    ),
-                    style: GoogleFonts.quicksand(
-                        fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
+                  child: MyTextFormField(controller: joinClassController,)
                 ),
                 SizedBox(
                   width: 10,
@@ -66,7 +55,10 @@ class JoinClass extends StatelessWidget {
                 Expanded(
                   child: MyElevatedButton(
                     text: 'Join',
-                    onPressed: () {},
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      await DatabaseHandler().joinClass(joinClassController.text.trim());
+                    },
                   ),
                 )
               ],
