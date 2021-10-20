@@ -1,4 +1,6 @@
+import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:att_man/Utils/Constants.dart';
+import 'package:att_man/Widgets/MyElevatedButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,7 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 class CreatedClassScreen extends StatelessWidget {
   final String classCode, classTitle, description;
 
-  CreatedClassScreen({required this.classCode, required this.classTitle, required this.description});
+  CreatedClassScreen(
+      {required this.classCode,
+      required this.classTitle,
+      required this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,9 @@ class CreatedClassScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 4,),
+          SizedBox(
+            height: 4,
+          ),
           Card(
             elevation: 0.5,
             child: ListTile(
@@ -67,11 +74,12 @@ class CreatedClassScreen extends StatelessWidget {
                         Icons.share_rounded,
                         color: kPrimary0,
                       ),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   CircleAvatar(
                     backgroundColor: kPrimaryLight50,
                     child: IconButton(
@@ -80,7 +88,10 @@ class CreatedClassScreen extends StatelessWidget {
                         color: kPrimary0,
                       ),
                       onPressed: () {
-                        Clipboard.setData(ClipboardData(text: 'To join the $classTitle [$description] use this code : ' + classCode));
+                        Clipboard.setData(ClipboardData(
+                            text:
+                                'To join the $classTitle [$description] use this code : ' +
+                                    classCode));
                       },
                     ),
                   ),
@@ -111,10 +122,15 @@ class CreatedClassScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Column(
-              children: [
-              ],
+              children: [],
             ),
           ),
+          MyElevatedButton(
+            text: 'TakeAttendance',
+            onPressed: () async {
+              await DatabaseHandler().takeAttendance(classCode);
+            },
+          )
         ],
       ),
     );

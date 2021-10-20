@@ -110,6 +110,23 @@ class DatabaseHandler {
         .snapshots();
   }
 
+  Future<void> takeAttendance(String classCode) async {
+    var myDoc = _fireStore
+        .collection('Classes')
+        .where('classCode', isEqualTo: classCode)
+        .get();
 
+    myDoc.then((value) {
+      String docId = value.docs[0].id;
+      if (docId.isNotEmpty) {
+        _fireStore
+            .collection('Classes')
+            .doc(docId)
+            .collection('Attendance')
+            .add({
+          'date' : DateTime.now().day.toString()+"-"+DateTime.now().month.toString()+"-"+DateTime.now().year.toString(),
+        });
+      }
+    });
+  }
 }
-
