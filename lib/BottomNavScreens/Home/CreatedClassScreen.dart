@@ -1,17 +1,22 @@
+import 'package:att_man/BottomNavScreens/Home/takeAttendance.dart';
 import 'package:att_man/Firebase/DatabaseHandler.dart';
+import 'package:att_man/Model/student.dart';
 import 'package:att_man/Utils/Constants.dart';
 import 'package:att_man/Widgets/MyElevatedButton.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CreatedClassScreen extends StatelessWidget {
   final String classCode, classTitle, description;
+  final DocumentSnapshot snapshot;
 
   CreatedClassScreen(
       {required this.classCode,
       required this.classTitle,
-      required this.description});
+      required this.description,
+      required this.snapshot});
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +133,20 @@ class CreatedClassScreen extends StatelessWidget {
           MyElevatedButton(
             text: 'TakeAttendance',
             onPressed: () async {
-              await DatabaseHandler().takeAttendance(classCode);
+              Map data = snapshot.data() as Map;
+              DocumentReference ref = snapshot.reference;
+              List students = data['students'];
+              List<String> c = [];
+              students.forEach((element) {
+                c.add(element.toString());
+              });
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => TakeAttendance(
+                            ids: c,
+                            classRef: ref,
+                          )));
             },
           )
         ],

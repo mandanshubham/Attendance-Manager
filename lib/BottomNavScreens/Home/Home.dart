@@ -80,6 +80,7 @@ class Home extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => CreatedClassScreen(
+                                      snapshot: document,
                                       classCode: data['classCode'].toString(),
                                       classTitle: data['title'],
                                       description: data['description'],
@@ -156,6 +157,7 @@ class Home extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => CreatedClassScreen(
+                                    snapshot: document,
                                     classCode: data['classCode'].toString(),
                                     classTitle: data['title'],
                                     description: data['description'],

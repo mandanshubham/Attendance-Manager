@@ -1,3 +1,4 @@
+import 'package:att_man/Model/student.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -110,6 +111,24 @@ class DatabaseHandler {
         .snapshots();
   }
 
+  Future<List<Student>> getStudents(List<String> ids) async {
+    List<Future<DocumentSnapshot>> futures = [];
+    ids.forEach((element) {
+      Future<DocumentSnapshot> future =
+          _fireStore.collection('Users').doc(element).get();
+      futures.add(future);
+    });
+    List<DocumentSnapshot> studentData = await Future.wait(futures);
+    List<Student> students = [];
+    studentData.forEach((element) {
+      Map data = element.data() as Map;
+      Student student = new Student(
+          data['uid'], data['displayName'], data['enrollmentNumber']);
+      students.add(student);
+    });
+    return students;
+  }
+
   Future<void> takeAttendance(String classCode) async {
     var myDoc = _fireStore
         .collection('Classes')
@@ -124,7 +143,11 @@ class DatabaseHandler {
             .doc(docId)
             .collection('Attendance')
             .add({
-          'date' : DateTime.now().day.toString()+"-"+DateTime.now().month.toString()+"-"+DateTime.now().year.toString(),
+          'date': DateTime.now().day.toString() +
+              "-" +
+              DateTime.now().month.toString() +
+              "-" +
+              DateTime.now().year.toString(),
         });
       }
     });
