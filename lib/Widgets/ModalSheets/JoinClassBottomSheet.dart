@@ -9,7 +9,7 @@ void joinClassBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
     builder: (builder) {
-      return JoinClass();
+      return JoinClassBottomSheet();
     },
     isScrollControlled: true,
     shape: RoundedRectangleBorder(
@@ -20,7 +20,7 @@ void joinClassBottomSheet(BuildContext context) {
   );
 }
 
-class JoinClass extends StatelessWidget {
+class JoinClassBottomSheet extends StatelessWidget {
   final TextEditingController joinClassController = TextEditingController();
 
   @override

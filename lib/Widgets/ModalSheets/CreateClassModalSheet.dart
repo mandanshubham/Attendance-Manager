@@ -1,8 +1,8 @@
 import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'MyElevatedButton.dart';
-import 'MyTextFormField.dart';
+import '../MyElevatedButton.dart';
+import '../MyTextFormField.dart';
 
 Future<void> createClassModalSheet(BuildContext context) {
   return showModalBottomSheet(

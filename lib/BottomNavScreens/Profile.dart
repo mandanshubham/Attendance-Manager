@@ -2,7 +2,9 @@ import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:att_man/Firebase/GoogleAuthentication.dart';
 import 'package:att_man/LoginScreens/GoogleLoginScreen.dart';
 import 'package:att_man/Utils/Constants.dart';
+import 'package:att_man/Widgets/ModalSheets/ProfileMS.dart';
 import 'package:att_man/Widgets/MyElevatedButton.dart';
+import 'package:att_man/Widgets/ModalSheets/MenuCreatedClasssMS.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +20,29 @@ class Profile extends StatelessWidget {
         _contactNumber,
         _emailId;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        automaticallyImplyLeading: false,
+        title: Text(
+          'PROFILE',
+          style: GoogleFonts.quicksand(
+            fontSize: 18,
+            color: kPrimary0,
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.menu_rounded,
+              color: kPrimary0,
+            ),
+            onPressed: () {
+              profileMS(context);
+            },
+          )
+        ],
+      ),
       body: FutureBuilder<DocumentSnapshot>(
           future: DatabaseHandler().getAllUserData(),
           builder: (context, snapshot) {
@@ -30,19 +55,11 @@ class Profile extends StatelessWidget {
               _emailId = profileData['emailId'];
 
               return Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 60),
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Text(
-                      'PROFILE',
-                      style: GoogleFonts.quicksand(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey,
-                      ),
-                    ),
                     SizedBox(
                       height: 20,
                     ),
@@ -130,38 +147,6 @@ class Profile extends StatelessWidget {
                     ),
                     SizedBox(
                       height: 40,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: MyElevatedButton(
-                            text: 'Edit profile',
-                            onPressed: () {
-                              //Todo:
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                          child: MyOutlinedButton(
-                            text: 'Logout',
-                            onPressed: () async {
-                              await GoogleAuthentication().signOutFromGoogle();
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    return GoogleLoginScreen();
-                                  },
-                                ),
-                                (_) => false,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),

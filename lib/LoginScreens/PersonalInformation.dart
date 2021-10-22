@@ -85,7 +85,7 @@ class PersonalInformation extends StatelessWidget {
                         onPressed: () async {
                           await DatabaseHandler().addUserToDatabase(
                               displayNameController.text.toUpperCase(),
-                              instituteNameController.text,
+                              instituteNameController.text.toUpperCase(),
                               enrollmentNumberController.text.toUpperCase(),
                               contactNumberController.text
                           );

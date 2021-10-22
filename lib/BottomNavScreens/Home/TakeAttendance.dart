@@ -1,7 +1,10 @@
 import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:att_man/Model/student.dart';
+import 'package:att_man/Utils/Constants.dart';
+import 'package:att_man/Widgets/MyElevatedButton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TakeAttendance extends StatelessWidget {
   const TakeAttendance({Key? key, required this.ids, required this.classRef})
@@ -29,7 +32,8 @@ class TakeAttendance extends StatelessWidget {
                   ats.add(at);
                 });
                 return Scaffold(
-                  floatingActionButton: FloatingActionButton.extended(
+                  floatingActionButton: MyElevatedButton(
+                    text: 'SUBMIT',
                       onPressed: () {
                         //TODO take attendance here
                         Map<String, bool> att = {};
@@ -41,9 +45,9 @@ class TakeAttendance extends StatelessWidget {
                             .add({'date': DateTime.now(), 'att': att});
                         print(students[1].isPresent);
                       },
-                      label: Text('Submit')),
+                  ),
                   body: Padding(
-                    padding: EdgeInsets.only(top: 60, left: 10, right: 10),
+                    padding: EdgeInsets.only(top: 40, left: 10, right: 10),
                     child: ListView.builder(
                         itemCount: ats.length,
                         itemBuilder: (_, index) {
@@ -83,15 +87,30 @@ class AttendanceTile extends StatefulWidget {
 class _AttendanceTileState extends State<AttendanceTile> {
   @override
   Widget build(BuildContext context) {
-    return SwitchListTile(
-        title: Text(widget.student.displayName),
-        subtitle: Text(widget.student.enrollNo),
-        value: widget.value,
-        onChanged: (val) {
-          setState(() {
-            widget.value = val;
-          });
-          widget.onChanged(val);
-        });
+    return Card(
+      elevation: 0.5,
+      child: SwitchListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+          activeTrackColor: kPrimary0,
+          title: Text(
+            widget.student.enrollNo,
+            style: GoogleFonts.quicksand(
+              fontSize: 20,
+            ),
+          ),
+          subtitle: Text(
+            widget.student.displayName,
+            style: GoogleFonts.quicksand(
+              fontSize: 14,
+            ),
+          ),
+          value: widget.value,
+          onChanged: (val) {
+            setState(() {
+              widget.value = val;
+            });
+            widget.onChanged(val);
+          }),
+    );
   }
 }

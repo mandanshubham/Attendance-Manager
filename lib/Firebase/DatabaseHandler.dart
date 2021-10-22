@@ -152,4 +152,29 @@ class DatabaseHandler {
       }
     });
   }
+
+  Future<void> deleteClass(String classCode) async {
+    var myDoc = _fireStore
+        .collection('Classes')
+        .where('classCode', isEqualTo: classCode)
+        .get();
+
+    myDoc.then((value) {
+      String docId = value.docs[0].id;
+      if(docId.isNotEmpty) {
+       var attDocs = _fireStore.collection('Classes').doc(docId).collection('Attendance').get();
+       attDocs.then((value) {
+         value.docs.forEach((element) {
+           String subDocId = element.id;
+           _fireStore.collection('Classes').doc(docId).collection('Attendance').doc(subDocId).delete();
+         });
+       }).then((value) {
+         _fireStore.collection('Classes').doc(docId).delete();
+       });
+      }
+      else {
+        throw 'Unable to delete, cause docId is empty';
+      }
+    });
+  }
 }
