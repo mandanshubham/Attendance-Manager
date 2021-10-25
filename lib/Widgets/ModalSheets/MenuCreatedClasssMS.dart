@@ -102,6 +102,20 @@ class MenuCreatedClassMS extends StatelessWidget {
               onTap: () {},
               contentPadding: EdgeInsets.all(0),
               leading: Icon(
+                Icons.people_alt_rounded,
+                color: kPrimary0,
+              ),
+              title: Text(
+                'Students',
+                style: GoogleFonts.quicksand(
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(
                 Icons.download_rounded,
                 color: kPrimary0,
               ),
@@ -128,7 +142,7 @@ class MenuCreatedClassMS extends StatelessWidget {
                 style: GoogleFonts.quicksand(
                     fontSize: 16, color: Colors.redAccent),
               ),
-            )
+            ),
           ],
         ),
       ),

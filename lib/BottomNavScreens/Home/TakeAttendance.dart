@@ -55,9 +55,10 @@ class TakeAttendance extends StatelessWidget {
                         }),
                   ),
                 );
-              } else
+              }
+              else
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator()
                 );
             } else
               return Center(

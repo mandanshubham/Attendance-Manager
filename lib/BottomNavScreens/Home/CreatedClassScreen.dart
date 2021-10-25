@@ -3,6 +3,7 @@ import 'package:att_man/Utils/Constants.dart';
 import 'package:att_man/Widgets/MyElevatedButton.dart';
 import 'package:att_man/Widgets/ModalSheets/MenuCreatedClasssMS.dart';
 import 'package:att_man/Widgets/MyOutlinedButton.dart';
+import 'package:att_man/Widgets/MyTextFormField.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +21,8 @@ class CreatedClassScreen extends StatelessWidget {
     required this.snapshot,
     required this.totalStudents,
   });
+
+  final TextEditingController sendController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -90,24 +93,36 @@ class CreatedClassScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: MyElevatedButton(
-                      text: 'TakeAttendance',
+                      text: 'Take Attendance',
                       onPressed: () async {
-                        Map data = snapshot.data() as Map;
-                        DocumentReference ref = snapshot.reference;
-                        List students = data['students'];
-                        List<String> c = [];
-                        students.forEach((element) {
-                          c.add(element.toString());
-                        });
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => TakeAttendance(
-                              ids: c,
-                              classRef: ref,
+                        if (totalStudents != '0') {
+                          Map data = snapshot.data() as Map;
+                          DocumentReference ref = snapshot.reference;
+                          List students = data['students'];
+                          List<String> c = [];
+                          students.forEach((element) {
+                            c.add(element.toString());
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => TakeAttendance(
+                                ids: c,
+                                classRef: ref,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'No students in the class!',
+                              style: GoogleFonts.quicksand(
+                                fontSize: 16,
+                              ),
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       },
                     ),
                   ),
@@ -121,6 +136,55 @@ class CreatedClassScreen extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 3, top: 20),
+              child: Text(
+                'Announcements',
+                style: GoogleFonts.quicksand(
+                  fontSize: 12,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Card(
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(10),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 3, bottom: 10, right: 3),
+              child: TextField(
+                controller: sendController,
+                cursorColor: kPrimary0,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: EdgeInsets.all(10),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: kPrimary0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: kPrimary0,
+                    ),
+                  ),
+                  border: OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      Icons.send_rounded,
+                      color: kPrimary0,
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+                style: GoogleFonts.quicksand(
+                    fontSize: 18, fontWeight: FontWeight.w400),
               ),
             ),
           ],
