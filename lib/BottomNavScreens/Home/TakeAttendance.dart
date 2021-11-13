@@ -47,6 +47,7 @@ class TakeAttendance extends StatelessWidget {
 
                         Navigator.pop(context);
                       },
+
                   ),
                   body: Padding(
                     padding: EdgeInsets.only(top: 40, left: 10, right: 10),

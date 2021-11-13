@@ -122,7 +122,7 @@ class JoinedClassAttendanceList extends StatelessWidget {
                   String date = DateFormat.yMMMd().format((attendanceDocs[index]['date'] as Timestamp).toDate()).toString() + ', ' +
                       DateFormat.Hm().format((attendanceDocs[index]['date'] as Timestamp).toDate()).toString();
                   var _currentUser = _firebaseAuth.currentUser?.uid.toString();
-                  Color? myColor = (attendanceDocs[index]['att.$_currentUser'] == true) ? Colors.green[300] : Colors.red[300];
+                  Color? myColor = (attendanceDocs[index]['att.$_currentUser'] == true) ? Colors.green[100] : Colors.red[200];
                   return Card(
                     color: myColor,
                     child: ListTile(

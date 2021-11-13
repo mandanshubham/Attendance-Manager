@@ -153,7 +153,7 @@ class DatabaseHandler {
         .collection('Classes')
         .where('classCode', isEqualTo: classCode)
         .get().then((value) {
-        myDoc =  value.docs[0].reference.collection('Attendance').get();
+        myDoc =  value.docs[0].reference.collection('Attendance').orderBy('date', descending: true).get();
     });
 
     return myDoc;

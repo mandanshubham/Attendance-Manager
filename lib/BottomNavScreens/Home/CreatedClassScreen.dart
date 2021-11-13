@@ -1,3 +1,4 @@
+import 'package:att_man/BottomNavScreens/Home/ManageAttendance.dart';
 import 'package:att_man/BottomNavScreens/Home/TakeAttendance.dart';
 import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:att_man/Utils/Constants.dart';
@@ -137,7 +138,15 @@ class CreatedClassScreen extends StatelessWidget {
                     child: MyOutlinedButton(
                       text: 'Manage Attendance',
                       onPressed: () {
-
+                        DocumentReference _docRef = snapshot.reference;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ManageAttendance(
+                              docRef: _docRef,
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
