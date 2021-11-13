@@ -34,6 +34,15 @@ class JoinClassBottomSheet extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            Center(
+              child: Container(
+                height: 5,
+                width: 40,
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+              ),
+            ),
             Text(
               'Enter code to join the class',
               style: GoogleFonts.quicksand(

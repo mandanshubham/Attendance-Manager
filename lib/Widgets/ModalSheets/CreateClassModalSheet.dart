@@ -33,6 +33,15 @@ class CreateClassScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            Center(
+              child: Container(
+                height: 5,
+                width: 40,
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+              ),
+            ),
             Text(
               'Title / Subject Name',
               style: GoogleFonts.quicksand(
@@ -47,7 +56,7 @@ class CreateClassScreen extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'Description\n(Grade/Year/Semester/Division/Section)',
+              'Description',
               style: GoogleFonts.quicksand(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,

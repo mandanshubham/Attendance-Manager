@@ -1,3 +1,4 @@
+import 'package:att_man/BottomNavScreens/Home/JoinedClassAttendanceList.dart';
 import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:att_man/Utils/Constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -42,17 +43,6 @@ class JoinedClassScreen extends StatelessWidget {
             ),
           ],
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.menu_rounded,
-              color: kPrimary0,
-            ),
-            onPressed: () {
-              //menuCreatedClassMS(context, classCode);
-            },
-          )
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -76,44 +66,63 @@ class JoinedClassScreen extends StatelessWidget {
                       children: [
                         Card(
                           elevation: 0.5,
-                          child: Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(horizontal: 30),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Attendance Chart          ',
-                                  style: GoogleFonts.quicksand(
-                                    fontSize: 16,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(5),
+                            onTap: () {
+                              //Todo: show student attendance to him;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => JoinedClassAttendanceList(
+                                    attendanceDocs: val,
+                                    classTitle: classTitle,
+                                    description: description,
+                                    totalClasses: totalClasses.toString(),
+                                    totalPresents: totalPresents.toString(),
+                                    absents: absents.toString(),
                                   ),
                                 ),
-                                Container(
-                                  height : 100,
-                                  child: PieChart(dataMap: {
-                                    'Presents' : totalPresents.toDouble()/totalClasses*100,
-                                    'Absents' : absents.toDouble()/totalClasses*100
-                                  },
-                                    animationDuration: Duration(milliseconds: 800),
-                                    chartLegendSpacing: 32,
-                                    chartRadius: 50,
-                                    colorList: [Colors.green, Colors.redAccent],
-                                    initialAngleInDegree: 0,
-                                    chartType: ChartType.ring,
-                                    ringStrokeWidth: 40,
-                                    legendOptions: LegendOptions(
-                                      showLegends: false,
-                                    ),
-                                    chartValuesOptions: ChartValuesOptions(
-                                      showChartValueBackground: true,
-                                      showChartValues: true,
-                                      showChartValuesInPercentage: false,
-                                      showChartValuesOutside: false,
-                                      decimalPlaces: 1,
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(horizontal: 30),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Attendance Chart          ',
+                                    style: GoogleFonts.quicksand(
+                                      fontSize: 16,
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Container(
+                                    height : 120,
+                                    child: PieChart(dataMap: {
+                                      'Presents' : totalPresents.toDouble()/totalClasses*100,
+                                      'Absents' : absents.toDouble()/totalClasses*100
+                                    },
+                                      animationDuration: Duration(milliseconds: 800),
+                                      chartLegendSpacing: 32,
+                                      chartRadius: 50,
+                                      colorList: [Colors.green, Colors.redAccent],
+                                      initialAngleInDegree: 0,
+                                      chartType: ChartType.ring,
+                                      ringStrokeWidth: 40,
+                                      legendOptions: LegendOptions(
+                                        showLegends: false,
+                                      ),
+                                      chartValuesOptions: ChartValuesOptions(
+                                        showChartValueBackground: true,
+                                        showChartValues: true,
+                                        showChartValuesInPercentage: false,
+                                        showChartValuesOutside: false,
+                                        decimalPlaces: 1,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -186,7 +195,7 @@ class JoinedClassScreen extends StatelessWidget {
                       ],
                     );
                   }
-                  return Container(height: 70,child: Center(child: CircularProgressIndicator(color: kPrimary0,strokeWidth: 2,),),);
+                  return Container(height: 180,child: Center(child: CircularProgressIndicator(color: kPrimary0,strokeWidth: 2,),),);
               },
             ),
             Padding(
@@ -231,7 +240,8 @@ class JoinedClassScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Text(
-                                        DateFormat.yMMMd().format((data['timestamp'] as Timestamp).toDate()).toString() + ', ' + DateFormat.Hm().format((data['timestamp'] as Timestamp).toDate()).toString() ,
+                                        DateFormat.yMMMd().format((data['timestamp'] as Timestamp).toDate()).toString() + ', '
+                                            + DateFormat.Hm().format((data['timestamp'] as Timestamp).toDate()).toString() ,
                                         style: GoogleFonts.quicksand(
                                             fontSize: 10),
                                       ),

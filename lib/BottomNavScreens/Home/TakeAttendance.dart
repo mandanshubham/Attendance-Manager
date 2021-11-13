@@ -42,7 +42,7 @@ class TakeAttendance extends StatelessWidget {
                         });
                         classRef
                             .collection("Attendance")
-                            .add({'date': DateTime.now(), 'att': att});
+                            .add({'date': Timestamp.now(), 'att': att});
                         print(students[1].isPresent);
 
                         Navigator.pop(context);

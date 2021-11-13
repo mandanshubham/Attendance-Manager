@@ -136,7 +136,9 @@ class CreatedClassScreen extends StatelessWidget {
                   Expanded(
                     child: MyOutlinedButton(
                       text: 'Manage Attendance',
-                      onPressed: () {},
+                      onPressed: () {
+
+                      },
                     ),
                   ),
                 ],
@@ -175,7 +177,7 @@ class CreatedClassScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  SelectableText(
                                     data['message'],
                                     style: GoogleFonts.quicksand(
                                         fontSize: 18),
