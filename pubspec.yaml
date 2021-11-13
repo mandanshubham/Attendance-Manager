@@ -23,6 +23,8 @@ environment:
 dependencies:
   google_fonts: ^2.1.0
   flutter_linkify: ^5.0.2
+  intl: ^0.17.0
+  pie_chart: ^5.1.0
 
   #Firebase Dependencies
   firebase_core: ^1.7.0

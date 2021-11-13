@@ -7,8 +7,8 @@ import '../MyTextFormField.dart';
 Future<void> createClassModalSheet(BuildContext context) {
   return showModalBottomSheet(
     context: context,
-    builder: (builder) {
-      return CreateClassScreen();
+    builder: (builder)  {
+      return  CreateClassScreen();
     },
     isScrollControlled: true,
     shape: RoundedRectangleBorder(
@@ -66,7 +66,11 @@ class CreateClassScreen extends StatelessWidget {
                   text: 'Create class',
                   onPressed: () async {
                     Navigator.pop(context);
-                    await DatabaseHandler().createClass(titleController.text, descriptionController.text);
+                    var snapshot = await DatabaseHandler().getAllUserData();
+                    var profileData = snapshot.data() as Map<String, dynamic>;
+                    String displayName = profileData['displayName'];
+                    String emailId = profileData['emailId'];
+                    await DatabaseHandler().createClass(titleController.text, descriptionController.text,displayName,emailId);
                   },
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:att_man/BottomNavScreens/Home/CreatedClassScreen.dart';
+import 'package:att_man/BottomNavScreens/Home/JoinedClassScreen.dart';
 import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:att_man/Utils/Constants.dart';
 import 'package:att_man/Widgets/ModalSheets/CreateClassModalSheet.dart';
@@ -74,6 +75,17 @@ class Home extends StatelessWidget {
                           child: ListTile(
                             onTap: () {
                               //Todo: Navigate to joinedClassScreen()
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => JoinedClassScreen(
+                                    snapshot: document,
+                                    classCode: data['classCode'].toString(),
+                                    classTitle: data['title'],
+                                    description: data['description'],
+                                  ),
+                                ),
+                              );
                             },
                             contentPadding:
                             EdgeInsets.symmetric(horizontal: 10),
@@ -148,6 +160,8 @@ class Home extends StatelessWidget {
                                     classTitle: data['title'],
                                     description: data['description'],
                                     totalStudents: data['students'].length.toString(),
+                                    displayName: data['displayName'],
+                                    emailId: data['emailId'],
                                   ),
                                 ),
                               );

@@ -1,4 +1,5 @@
 import 'package:att_man/BottomNavScreens/Home/TakeAttendance.dart';
+import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:att_man/Utils/Constants.dart';
 import 'package:att_man/Widgets/MyElevatedButton.dart';
 import 'package:att_man/Widgets/ModalSheets/MenuCreatedClasssMS.dart';
@@ -8,9 +9,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class CreatedClassScreen extends StatelessWidget {
-  final String classCode, classTitle, description;
+  final String classCode, classTitle, description,displayName,emailId;
   final DocumentSnapshot snapshot;
   final String totalStudents;
 
@@ -20,6 +22,8 @@ class CreatedClassScreen extends StatelessWidget {
     required this.description,
     required this.snapshot,
     required this.totalStudents,
+    required this.displayName,
+    required this.emailId,
   });
 
   final TextEditingController sendController = TextEditingController();
@@ -148,10 +152,59 @@ class CreatedClassScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Card(
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(10),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(10),
+                child: StreamBuilder(
+                  stream: DatabaseHandler().streamMessages(classCode),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasData) {
+                      print(snapshot.toString());
+                      return ListView(
+                        reverse: true,
+                        padding: EdgeInsets.symmetric(horizontal: 0),
+                        children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                          Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                          return Card(
+                            elevation: 0.8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    data['message'],
+                                    style: GoogleFonts.quicksand(
+                                        fontSize: 18),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        DateFormat.yMMMd().format((data['timestamp']).toDate()).toString() + ', ' + DateFormat.Hm().format((data['timestamp']).toDate()).toString() ,
+                                        style: GoogleFonts.quicksand(
+                                            fontSize: 10),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    } else
+                      return Center(
+                        child: Text(
+                          'No Message',
+                          style: GoogleFonts.quicksand(
+                              fontSize: 18),
+                        ),
+                      );
+                  },
                 ),
               ),
             ),
@@ -160,6 +213,7 @@ class CreatedClassScreen extends StatelessWidget {
               child: TextField(
                 controller: sendController,
                 cursorColor: kPrimary0,
+                autofocus: false,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
@@ -180,7 +234,12 @@ class CreatedClassScreen extends StatelessWidget {
                       Icons.send_rounded,
                       color: kPrimary0,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      if(sendController.text.isNotEmpty) {
+                       DatabaseHandler().sendMessage(classCode,sendController.text.toString().trim(),classTitle,description,displayName,emailId);
+                      }
+                      sendController.clear();
+                    },
                   ),
                 ),
                 style: GoogleFonts.quicksand(

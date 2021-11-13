@@ -38,12 +38,14 @@ class TakeAttendance extends StatelessWidget {
                         //TODO take attendance here
                         Map<String, bool> att = {};
                         students.forEach((element) {
-                          att[element.enrollNo] = element.isPresent;
+                          att[element.uid] = element.isPresent;
                         });
                         classRef
                             .collection("Attendance")
                             .add({'date': DateTime.now(), 'att': att});
                         print(students[1].isPresent);
+
+                        Navigator.pop(context);
                       },
                   ),
                   body: Padding(

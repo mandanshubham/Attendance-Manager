@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class DatabaseHandler {
+
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
@@ -57,10 +58,12 @@ class DatabaseHandler {
   }
 
   //This function is used to create a class in Classes collection
-  Future<void> createClass(String title, String description) async {
+  Future<void> createClass(String title, String description, String displayName, String emailId) async {
     User? currentUser = _firebaseAuth.currentUser;
     if (currentUser != null) {
       _fireStore.collection('Classes').add({
+        'displayName' : displayName,
+        'emailId' : emailId,
         'uid': currentUser.uid,
         'title': title,
         'description': description,
@@ -111,6 +114,21 @@ class DatabaseHandler {
         .snapshots();
   }
 
+  Stream<QuerySnapshot> streamMessages(String classCode) {
+    return _fireStore
+        .collection('Messages')
+        .where('classCode', isEqualTo: classCode)
+        .orderBy('timestamp', descending: true)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> streamNotification(String classCode) {
+    return _fireStore
+        .collection('Messages')
+        .where('classCode', isEqualTo: classCode)
+        .snapshots();
+  }
+
   Future<List<Student>> getStudents(List<String> ids) async {
     List<Future<DocumentSnapshot>> futures = [];
     ids.forEach((element) {
@@ -129,28 +147,34 @@ class DatabaseHandler {
     return students;
   }
 
-  Future<void> takeAttendance(String classCode) async {
-    var myDoc = _fireStore
+  Future<QuerySnapshot<Map<String, dynamic>>> getJoinedClassData(String classCode) async {
+    late Future<QuerySnapshot<Map<String, dynamic>>> myDoc;
+    await _fireStore
         .collection('Classes')
         .where('classCode', isEqualTo: classCode)
-        .get();
-
-    myDoc.then((value) {
-      String docId = value.docs[0].id;
-      if (docId.isNotEmpty) {
-        _fireStore
-            .collection('Classes')
-            .doc(docId)
-            .collection('Attendance')
-            .add({
-          'date': DateTime.now().day.toString() +
-              "-" +
-              DateTime.now().month.toString() +
-              "-" +
-              DateTime.now().year.toString(),
-        });
-      }
+        .get().then((value) {
+        myDoc =  value.docs[0].reference.collection('Attendance').get();
     });
+
+    return myDoc;
+  }
+
+
+
+  Future<void> sendMessage(String classCode, String message, String title, String description,String displayName, String emailId) async {
+    User? currentUser = _firebaseAuth.currentUser;
+    if (currentUser != null) {
+      _fireStore.collection('Messages').add({
+        'displayName' : displayName,
+        'emailId' : emailId,
+        'uid': currentUser.uid,
+        'title': title,
+        'description': description,
+        'classCode': classCode,
+        'message' : message,
+        'timestamp' : Timestamp.now()
+      });
+    }
   }
 
   Future<void> deleteClass(String classCode) async {
