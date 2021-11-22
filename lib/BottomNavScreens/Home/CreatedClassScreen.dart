@@ -222,6 +222,7 @@ class CreatedClassScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 3, bottom: 10, right: 3),
               child: TextField(
+                keyboardType: TextInputType.multiline,
                 controller: sendController,
                 cursorColor: kPrimary0,
                 autofocus: false,

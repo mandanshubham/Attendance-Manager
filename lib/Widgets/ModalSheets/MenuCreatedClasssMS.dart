@@ -98,20 +98,20 @@ class MenuCreatedClassMS extends StatelessWidget {
               ),
             ),
             Divider(),
-            ListTile(
-              onTap: () {},
-              contentPadding: EdgeInsets.all(0),
-              leading: Icon(
-                Icons.people_alt_rounded,
-                color: kPrimary0,
-              ),
-              title: Text(
-                'Students',
-                style: GoogleFonts.quicksand(
-                  fontSize: 16,
-                ),
-              ),
-            ),
+            // ListTile(
+            //   onTap: () {},
+            //   contentPadding: EdgeInsets.all(0),
+            //   leading: Icon(
+            //     Icons.people_alt_rounded,
+            //     color: kPrimary0,
+            //   ),
+            //   title: Text(
+            //     'Students',
+            //     style: GoogleFonts.quicksand(
+            //       fontSize: 16,
+            //     ),
+            //   ),
+            // ),
             ListTile(
               onTap: () {},
               contentPadding: EdgeInsets.all(0),

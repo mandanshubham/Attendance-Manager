@@ -42,6 +42,9 @@ class CreateClassScreen extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(20))),
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
             Text(
               'Title / Subject Name',
               style: GoogleFonts.quicksand(

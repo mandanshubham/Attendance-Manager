@@ -1,3 +1,4 @@
+import 'package:att_man/BottomNavScreens/ProfileEditScreen.dart';
 import 'package:att_man/Firebase/DatabaseHandler.dart';
 import 'package:att_man/Firebase/GoogleAuthentication.dart';
 import 'package:att_man/LoginScreens/GoogleLoginScreen.dart';
@@ -45,6 +46,15 @@ class ProfileMS extends StatelessWidget {
               ),
             ),
             ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfileScreen(
+                    ),
+                  ),
+                );
+              },
               contentPadding: EdgeInsets.all(0),
               leading: Icon(
                 Icons.edit_rounded,

@@ -28,7 +28,7 @@ class _BottomNavLayoutState extends State<BottomNavLayout> {
   void initState() {
     _bottomNavScreens = [
     Home(),
-    Notifications(),
+    //Notifications(),
     Profile(),
     ];
     // TODO: implement initState
@@ -49,10 +49,10 @@ class _BottomNavLayoutState extends State<BottomNavLayout> {
              icon: Icon(Icons.home_rounded),
              label: 'Home',
            ),
-           BottomNavigationBarItem(
-             icon: Icon(Icons.email_rounded),
-             label: 'Notifications',
-           ),
+           // BottomNavigationBarItem(
+           //   icon: Icon(Icons.email_rounded),
+           //   label: 'Notifications',
+           // ),
            BottomNavigationBarItem(
              icon: Icon(Icons.account_box_rounded),
              label: 'Profile',
